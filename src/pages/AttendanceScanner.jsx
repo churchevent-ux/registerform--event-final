@@ -22,7 +22,7 @@ const AttendanceScanner = () => {
   useEffect(() => {
     startScanner();
     return () => stopScanner();
-  }, []);
+  }, [startScanner, stopScanner]);
 
   const markAttendance = async (id, statusOption) => {
     const scannedId = id.replace(/\s/g, "").trim().toLowerCase();

@@ -79,7 +79,7 @@ const Preview = () => {
           initialParticipants = snap.docs.map((doc) => mapParticipantData(doc.data()));
         } catch (err) {
           console.error(err);
-          alert("❌ Failed to fetch participants: " + err.message);
+          alert("\u274c Failed to fetch participants: " + err.message);
         } finally {
           setLoading(false);
         }
@@ -89,7 +89,7 @@ const Preview = () => {
     };
 
     initializeParticipants();
-  }, [state]);
+  }, [state, mapParticipantData]);
 
   /** Handlers **/
   const handleChange = (index, field, value) => {
