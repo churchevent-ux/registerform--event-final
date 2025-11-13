@@ -12,8 +12,8 @@ import { db } from "../firebase";
 
 // Logos
 import Logo from "../images/church logo2.png";
-import Logo2 from "../images/logo.jpg";
-import Logo3 from "../images/logo2.png";
+// import Logo2 from "../images/logo.jpg";
+// import Logo3 from "../images/logo2.png";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -211,7 +211,7 @@ const handleSubmit = (e) => {
   };
 
   // Sibling participants
-  const siblingParticipants =
+  // const siblingParticipants =
     formData.hasSibling === "yes"
       ? formData.siblings.map((s) => ({
           participantName: s.name,

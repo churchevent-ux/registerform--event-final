@@ -10,8 +10,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import Logo from "../images/bcst.jpeg";
-import Logo2 from "../images/church logo2.png";
-import Logo3 from "../images/logo2.png";
+// import Logo2 from "../images/church logo2.png";
+// import Logo3 from "../images/logo2.png";
 
 const VolunteerRegister = () => {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const VolunteerRegister = () => {
     } else {
       setFormData((prev) => ({ ...prev, age: "" }));
     }
-  }, [formData.dob]);
+  }, [formData.dob, formData.age]);
 
   /** ---------------------------
    * 4. Handlers

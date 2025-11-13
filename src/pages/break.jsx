@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 // Dummy data with multiple dates
 const breakData = {
@@ -66,14 +66,16 @@ const BreakPage = () => {
   }, []);
 
   // Filter data for selected date
-  let breaksForDate = breakData[selectedDate] || [];
-  breaksForDate = breaksForDate.filter(
-    s => s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         s.id.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  // Sort: ongoing breaks on top
-  breaksForDate.sort((a, b) => (!a.breakOut && b.breakOut ? -1 : a.breakOut && !b.breakOut ? 1 : 0));
+  const breaksForDate = useMemo(() => {
+    let filtered = breakData[selectedDate] || [];
+    filtered = filtered.filter(
+      s => s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+           s.id.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    // Sort: ongoing breaks on top
+    filtered.sort((a, b) => (!a.breakOut && b.breakOut ? -1 : a.breakOut && !b.breakOut ? 1 : 0));
+    return filtered;
+  }, [selectedDate, searchQuery]);
 
   // Notifications for >1 hour break
   useEffect(() => {

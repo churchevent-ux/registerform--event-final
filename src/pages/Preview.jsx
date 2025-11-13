@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
@@ -39,7 +39,7 @@ const Preview = () => {
   };
 
   /** Map Participant Data **/
-  const mapParticipantData = (p) => {
+  const mapParticipantData = useCallback((p) => {
     const age = p.age ?? (p.dob ? calculateAge(p.dob) : null);
     const { label, code } = getCategory(age);
     const medConds = Array.isArray(p.medicalConditions)
@@ -62,7 +62,7 @@ const Preview = () => {
       medicalConditions: medConds,
       additionalMedicalNotes: p.additionalMedicalNotes || "",
     };
-  };
+  }, [getCategory, calculateAge]);
 
   /** Load Participants **/
   useEffect(() => {

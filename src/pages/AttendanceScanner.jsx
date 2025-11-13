@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import {
   collection,
@@ -18,6 +18,8 @@ const AttendanceScanner = () => {
   const [manualStatus, setManualStatus] = useState("Sign-In");
   const scannerRef = useRef(null);
   const lastScannedRef = useRef("");
+
+
 
   useEffect(() => {
     startScanner();
@@ -100,7 +102,7 @@ const AttendanceScanner = () => {
     await markAttendance(scannedId, statusOption === "Break Out/In" ? "Break Out" : statusOption);
   };
 
-  const startScanner = async () => {
+  const startScanner = useCallback(async () => {
     if (scannerRef.current) return;
 
     const scanner = new Html5Qrcode("qr-reader");
@@ -116,9 +118,9 @@ const AttendanceScanner = () => {
       console.error("Camera start failed:", err);
       alert("Camera permission denied or not available.");
     }
-  };
+  }, [handleScanSuccess]);
 
-  const stopScanner = async () => {
+  const stopScanner = useCallback(async () => {
     if (!scannerRef.current) return;
     try {
       const state = scannerRef.current.getState();
@@ -129,7 +131,7 @@ const AttendanceScanner = () => {
     } catch (err) {
       console.warn("Scanner stop error:", err);
     }
-  };
+  }, []);
 
   return (
     <div style={{ textAlign: "center", padding: 10, display: "flex", flexDirection: "column", alignItems: "center" }}>
